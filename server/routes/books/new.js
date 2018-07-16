@@ -1,6 +1,6 @@
 import BookControllers from '../../controllers/BookControllers'
 const books = new BookControllers()
 
-exports.all = async (ctx, next) => {
+exports.all = async (ctx) => {
     await books.create(ctx)
 }

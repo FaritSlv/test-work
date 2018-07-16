@@ -4,7 +4,7 @@ import _ from 'underscore'
 class TableClass {
     constructor(table) {
         this._table = table
-        this._fields = ["*"]
+        this._fields = ['*']
         this._orders = {}
         this._limit = 9
         this._page = 1
@@ -49,7 +49,7 @@ class TableClass {
      */
     fields(params) {
         if (!Array.isArray(params)) {
-            throw new Error("Fields is not array")
+            throw new Error('Fields is not array')
         }
         if (params.length) {
             this._fields = params
@@ -62,13 +62,13 @@ class TableClass {
      */
     orders(params) {
         if (util.isObject(params) === false) {
-            throw new Error("Orders is not object")
+            throw new Error('Orders is not object')
         }
         let orders = {}
         let key
         for (key in params) {
             let direction = params[key].toLowerCase()
-            orders[key] = (["asc", "desc"].includes(direction) ? direction : "asc")
+            orders[key] = (['asc', 'desc'].includes(direction) ? direction : 'asc')
         }
 
         if (Object.keys(orders).length > 0)
@@ -94,41 +94,35 @@ class TableClass {
         this._limit = parseInt(params)
     }
 
-    where(params) {
-        this.dbTest.get();
-    }
-
     /**
      *
      * @param withPagination
      * @returns {Promise<{items: *, pagination: *}>}
      */
     async selectQuery(withPagination) {
-        let fieldsMap = this._fields.map(function (value) {
-            return (value === "*" ? value : "`" + value + "`")
-        })
-        let query = ["SELECT ", fieldsMap, " FROM ", this._table]
+        let fieldsMap = this._fields.map(value => (value === '*' ? value : '`' + value + '`'))
+        let query = ['SELECT ', fieldsMap, ' FROM ', this._table]
 
         if (Object.keys(this._orders).length > 0) {
             let orders = Object.keys(this._orders).map(function (field) {
                 let direction = this._orders[field]
-                return field + " " + direction
+                return field + ' ' + direction
             }, this)
-            query.push(" ORDER BY ")
+            query.push(' ORDER BY ')
             query = query.concat(orders)
         }
         let pagination = await this.pagination()
 
-        query.push(" LIMIT ", ((pagination.current - 1) * this._limit), ",", this._limit)
+        query.push(' LIMIT ', ((pagination.current - 1) * this._limit), ',', this._limit)
 
-        let [rows] = await global.db.execute(query.join(""))
+        let [rows] = await global.db.execute(query.join(''))
         let result = {
-            "items": rows
+            'items': rows
         }
         if (withPagination === true) {
-            result["pagination"] = pagination;
+            result['pagination'] = pagination
         }
-        return result;
+        return result
     }
 
     /**
@@ -136,8 +130,8 @@ class TableClass {
      * @returns {Promise<{last: number, current: number|*, first: number, pageCount: number, pageRange: number|*, startPage: number|*, endPage: *, total: number}>}
      */
     async pagination() {
-        let [res] = await global.db.execute("SELECT count(1) as total FROM " + this._table)
-        let total = parseInt(res[0]["total"])
+        let [res] = await global.db.execute(`SELECT count(1) as total FROM ${this._table}`)
+        let total = parseInt(res[0]['total'])
         let current = this._page
         let pageRange = this._limit
         let pageCount = Math.ceil(total / pageRange)
@@ -197,14 +191,12 @@ class TableClass {
      * @returns {Promise<void>}
      */
     async insertQuery(data) {
-        let d = new Date();
-        let dateFormat = "" + d.getFullYear() + ("0"+(d.getMonth()+1)).slice(-2) + ("0" + d.getDate()).slice(-2);
+        let d = new Date()
+        let dateFormat = '' + d.getFullYear() + ('0'+(d.getMonth()+1)).slice(-2) + ('0' + d.getDate()).slice(-2)
 
-        let fieldsMap = [data.author, data.title, data.description, dateFormat].map(function (value) {
-            return "'" + value + "'"
-        })
-        let sql = ["INSERT ", " INTO ", this._table, " (`author`,`title`,`description`, `date`) VALUES ", " (", fieldsMap.join(",") , ") "];
-        await global.db.execute(sql.join(""))
+        let fieldsMap = [data.author, data.title, data.description, dateFormat].map((value) => `'${value}'`)
+        let sql = ['INSERT ', ' INTO ', this._table, ' (`author`,`title`,`description`, `date`) VALUES ', ' (', fieldsMap.join(',') , ') ']
+        await global.db.execute(sql.join(''))
     }
 }
 

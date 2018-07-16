@@ -1,17 +1,19 @@
 const cfg = require('config')
-const {VueLoaderPlugin} = require('vue-loader');
+const {VueLoaderPlugin} = require('vue-loader')
 const path = require('path')
-const rootDir = path.resolve(__dirname, "../")
+const rootDir = path.resolve(__dirname, '../')
 
+/** @namespace cfg.proxy */
+/** @namespace cfg.server */
 module.exports = {
     context: path.join(rootDir, 'server'),
     entry: {
-        app: process.cwd() + "/server/main.js"
+        app: process.cwd() + '/server/main.js'
     },
     output: {
-        path: path.resolve(rootDir, "assets"),
-        publicPath: "/assets/",
-        filename: "build.js"
+        path: path.resolve(rootDir, 'assets'),
+        publicPath: '/assets/',
+        filename: 'build.js'
     },
     module: {
         rules: [
@@ -61,18 +63,18 @@ module.exports = {
     resolve: {
         alias: {
             'vue$': 'vue/dist/vue',
-            'jquery$': "jquery/dist/jquery"
+            'jquery$': 'jquery/dist/jquery'
         },
         extensions: ['*', '.js', '.vue', '.json']
     },
     devServer: {
         hot: true,
-        contentBase: path.resolve(rootDir, "./public"),
+        contentBase: path.resolve(rootDir, './public'),
         proxy: {
             '/api': {
-                target: "http://localhost:" + cfg.proxy.port,
-                "secure": false,
-                "logLevel": "debug"
+                target: `http://localhost:${cfg.proxy.port}`,
+                'secure': false,
+                'logLevel': 'debug'
             }
         },
         historyApiFallback: true,

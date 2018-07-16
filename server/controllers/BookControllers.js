@@ -6,32 +6,28 @@ class BookControllers {
         const book = new BookModels()
 
         try {
-            let result = await book.list(query)
-            ctx.body = result
+            ctx.body = await book.list(query)
         } catch (error) {
             console.log(error)
             ctx.throw(400, 'INVALID_DATA ' + error)
         }
     }
     async edit(ctx) {
-        const query = ctx.request.body
-        const book = new BookModels()
 
         try {
-            let result = {"edit": "tue"};
-            ctx.body = result
+            ctx.body = {'edit': 'tue'}
         } catch (error) {
             console.log(error)
             ctx.throw(400, 'INVALID_DATA ' + error)
         }
     }
+
     async create(ctx) {
         const query = ctx.request.body
         const book = new BookModels()
 
         try {
-            let result = await book.insert(query);
-            ctx.body = result
+            ctx.body = await book.insert(query)
         } catch (error) {
             console.log(error)
             ctx.throw(400, 'INVALID_DATA ' + error)

@@ -8,10 +8,10 @@ import App from './views/App.vue'
 import VueRouter from 'vue-router'
 import BootstrapVue from 'bootstrap-vue'
 
-Vue.use(VueRouter).use(BootstrapVue);
+Vue.use(VueRouter).use(BootstrapVue)
 
 const router = new VueRouter({
-    mode: "history",
+    mode: 'history',
     routes: [
         {
             path: '/',
@@ -34,10 +34,11 @@ const router = new VueRouter({
             component: require('./views/books/edit.vue').default
         }
     ]
-});
+})
 
-const app = new Vue({
-    el: "#app",
+
+new Vue({
+    el: '#app',
     router: router,
     render: h => h(App, {})
-}).$mount('#app');
+}).$mount('#app')
