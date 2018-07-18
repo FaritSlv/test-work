@@ -67,9 +67,9 @@
                 evt.preventDefault();
                 const _self = this;
 
-                bookService.create(this, this.form).then(function(res) {
-                    _self.$router.push('/books');
-                }, function(e){
+                bookService.create(this, this.form).then(() => {
+                    this.$router.push('/books');
+                }, e => {
                     alert(e.message);
                 });
             },
