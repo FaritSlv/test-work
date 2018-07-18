@@ -3,15 +3,17 @@ import BookModels from '../models/BookModels.js'
 class BookControllers {
     async index(ctx) {
         const query = ctx.request.body
-        const book = new BookModels()
+        const bookM = new BookModels()
 
         try {
-            ctx.body = await book.list(query)
+            await bookM.list(query)
+            ctx.body = {books: bookM.books, pagination: bookM.pagination}
         } catch (error) {
             console.log(error)
             ctx.throw(400, 'INVALID_DATA ' + error)
         }
     }
+
     async edit(ctx) {
 
         try {
@@ -27,7 +29,8 @@ class BookControllers {
         const book = new BookModels()
 
         try {
-            ctx.body = await book.insert(query)
+            await book.insert(query)
+            ctx.body = 'Success'
         } catch (error) {
             console.log(error)
             ctx.throw(400, 'INVALID_DATA ' + error)

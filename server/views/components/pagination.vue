@@ -48,7 +48,7 @@
             "previous",
             "next"
         ],
-        mounted: function() {
+        mounted() {
             this.path = this.$route.path
         },
         data() {

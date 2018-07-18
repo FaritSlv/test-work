@@ -1,7 +1,9 @@
 <template>
     <div>
         <blockquote class="blockquote text-center">
-            <h1 class="mb-0">Библиотека "<a href="http://knigafund.ru/" target="_blank">Книгафонд</a>" <router-link class="btn btn-primary" :to="{ path: '/books/new'}" exact>Добавить книгу</router-link></h1>
+            <h1 class="mb-0">Библиотека "<a href="http://knigafund.ru/" target="_blank">Книгафонд</a>"
+                <router-link class="btn btn-primary" :to="{ path: '/books/new'}" exact>Добавить книгу</router-link>
+            </h1>
         </blockquote>
 
         <div class="py-5 bg-light">
@@ -33,7 +35,7 @@
         components: {
             Pagination
         },
-        mounted: function() {
+        mounted() {
             this.loadBooks();
             this.path = this.$route.path
         },
@@ -51,12 +53,10 @@
         },
         methods: {
             loadBooks() {
-                const _self = this;
-
-                bookService.list(this, this.$route.query).then(function(res) {
-                    _self.books = res.data.books;
-                    _self.pagination = res.data.pagination;
-                }, function(e){
+                bookService.list(this, this.$route.query).then(res => {
+                    this.books = res.data.books;
+                    this.pagination = res.data.pagination;
+                }, e => {
                     alert(e.message);
                 });
             }

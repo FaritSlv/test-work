@@ -13,10 +13,10 @@ module.exports = {
         port: 3001
     },
     database: {
-        host: "localhost",
-        user: "root",
-        password: "root",
-        port: "3306",
-        database: "library_db"
+        host: 'localhost',
+        user: 'root',
+        password: 'root',
+        port: '3306',
+        database: 'library_db'
     }
-};
+}

@@ -68,8 +68,8 @@
                 const _self = this;
 
                 bookService.create(this, this.form).then(() => {
-                    _self.$router.push('/books');
-                }, function(e){
+                    this.$router.push('/books');
+                }, e => {
                     alert(e.message);
                 });
             },
